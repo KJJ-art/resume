@@ -3,226 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security & Infra Engineer Portfolio</title>
+    <title>KJJ - Security & Infra Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- 전체 레이아웃 및 디자인 --- */
+        /* --- 기본 설정 --- */
+        :root {
+            --primary-color: #2563eb; /* 신뢰감을 주는 로얄 블루 */
+            --secondary-color: #1e293b; /* 짙은 네이비 (텍스트) */
+            --bg-color: #f8fafc; /* 아주 연한 회색 배경 */
+            --card-bg: #ffffff; /* 카드 배경 */
+            --text-gray: #64748b;
+        }
+
         body {
-            background-color: #121212; /* 깊은 어두운색 배경 */
-            color: #e0e0e0; /* 밝은 회색 글씨 */
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* 깔끔한 현대적 폰트 */
-            margin: 0; padding: 0; line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--secondary-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
-        a { text-decoration: none; color: #00ff41; transition: color 0.3s; }
-        a:hover { color: #fff; }
 
-        /* 메인 컨테이너 박스 */
+        /* --- 레이아웃 --- */
         .container {
-            max-width: 900px; margin: 40px auto; padding: 30px;
-            background-color: #1e1e1e; /* 조금 더 밝은 컨테이너 배경 */
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* --- 1. 헤더 (프로필) 영역 --- */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .profile-img-box {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #fff;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0 0 10px;
+            color: var(--secondary-color);
+            font-weight: 800;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            background-color: #eff6ff;
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .bio {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: var(--text-gray);
+            font-size: 1.05rem;
+        }
+
+        /* --- 소셜 링크 버튼 --- */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
             border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .btn-primary { 
+            background-color: var(--primary-color); 
+            color: white; 
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2); 
+        }
+        .btn-outline { 
+            background-color: white; 
+            color: var(--secondary-color); 
+            border: 1px solid #e2e8f0; 
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+
+        /* --- 2. 카드 그리드 레이아웃 --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        /* --- [상단] 프로필 섹션 스타일 --- */
-        .profile-header {
-            display: flex; align-items: center;
-            border-bottom: 2px solid #333; padding-bottom: 30px; margin-bottom: 30px;
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            border: 1px solid #f1f5f9;
+            height: 100%; /* 카드 높이 맞춤 */
         }
-        .profile-image-container {
-            flex: 0 0 180px; /* 사진 영역 너비 고정 */
-            margin-right: 40px; text-align: center;
-        }
-        .profile-image {
-            width: 180px; height: 180px;
-            border-radius: 50%; /* 원형 사진 */
-            object-fit: cover; /* 비율 유지하며 꽉 채우기 */
-            border: 3px solid #00ff41; /* 초록색 테두리 포인트 */
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3); /* 빛나는 효과 */
-            background-color: #333; /* 사진 없을 때 배경색 */
-        }
-        .profile-info { flex: 1; } /* 나머지 공간 차지 */
-        .profile-name { font-size: 2.2em; font-weight: bold; margin: 0 0 10px 0; color: #fff; }
-        .profile-title { font-size: 1.1em; color: #00ff41; margin-bottom: 15px; font-weight: 500; }
-        .profile-description { margin-bottom: 25px; color: #bbb; font-size: 0.95em; }
-        .social-links a {
-            display: inline-flex; align-items: center; margin-right: 20px;
-            font-size: 1em; color: #bbb; border: 1px solid #444;
-            padding: 8px 15px; border-radius: 20px; transition: all 0.3s;
-        }
-        .social-links a:hover { color: #00ff41; border-color: #00ff41; background-color: rgba(0,255,65,0.1); }
-        .social-links i { margin-right: 8px; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1); }
 
-        /* --- [하단] 터미널 섹션 스타일 --- */
-        .terminal-section {
-            background-color: #0d0d0d; /* 더 어두운 리얼 터미널 배경 */
-            padding: 25px; border-radius: 8px; border: 1px solid #333;
-            font-family: 'Consolas', 'Courier New', monospace; /* 전용 터미널 폰트 */
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 15px;
         }
-        .terminal-header {
-            color: #888; font-size: 0.9em; margin-bottom: 20px;
-            display: flex; align-items: center; border-bottom: 1px solid #222; padding-bottom: 10px;
+        .card-title i { margin-right: 12px; color: var(--primary-color); }
+
+        /* --- 스킬 태그 스타일 --- */
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag {
+            background-color: #f8fafc;
+            color: var(--secondary-color);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            border: 1px solid #e2e8f0;
         }
-        .terminal-header i { margin-right: 10px; color: #ff0055; }
-
-        /* 명령어 라인 스타일 */
-        .command-line { margin-bottom: 15px; }
-        .prompt { color: #ff0055; margin-right: 10px; font-weight: bold; }
-        .command { color: #fff; font-weight: bold; }
-        .output { color: #ccc; margin-bottom: 25px; white-space: pre-wrap; padding-left: 15px; border-left: 3px solid #ff0055; }
-        .output strong { color: #fff; font-weight: 600; }
-        .highlight { color: #00ff41; }
-        .sub-text { color: #888; font-size: 0.9em; margin-left: 20px; display: block; margin-top: 5px; }
-
-        /* 타이핑 커서 */
-        .cursor {
-            display: inline-block; width: 9px; height: 18px; background-color: #00ff41;
-            animation: blink 1s infinite; vertical-align: text-bottom; margin-left: 5px;
+        .tag i { margin-right: 8px; color: var(--text-gray); }
+        .tag.highlight { 
+            background-color: #eff6ff; 
+            color: var(--primary-color); 
+            border: 1px solid #dbeafe; 
         }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .hidden { display: none; }
+        .tag.highlight i { color: var(--primary-color); }
 
-        /* 스킬바 디자인 */
-        .skill-bar-container { margin-bottom: 12px; display: flex; align-items: center; }
-        .skill-name { flex: 0 0 130px; color: #fff; font-weight: 600; }
-        .progress-bg {
-            flex: 1; height: 10px; background-color: #333; border-radius: 5px; overflow: hidden;
+        /* --- 리스트 스타일 (교육/경력) --- */
+        .timeline-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 25px;
+            border-left: 2px solid #e2e8f0;
         }
-        .fill { height: 100%; background-color: #00ff41; width: 0; transition: width 1.2s cubic-bezier(0.22, 0.61, 0.36, 1); }
+        .timeline-item:last-child { margin-bottom: 0; }
+        
+        .timeline-date { 
+            font-size: 0.85rem; 
+            color: var(--primary-color); 
+            font-weight: 700;
+            margin-bottom: 5px; 
+            background: #eff6ff;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .timeline-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 5px; display: block;}
+        .timeline-desc { font-size: 0.95rem; color: var(--text-gray); margin: 0; }
 
-        /* 반응형: 모바일 화면 */
+        /* --- 푸터 --- */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            padding-top: 40px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* --- 반응형 --- */
         @media (max-width: 768px) {
-            .container { margin: 20px 10px; padding: 20px; }
-            .profile-header { flex-direction: column; text-align: center; }
-            .profile-image-container { margin-right: 0; margin-bottom: 25px; }
-            .social-links { justify-content: center; flex-wrap: wrap; gap: 10px; }
-            .social-links a { margin-right: 0; }
+            .container { padding: 40px 20px; }
+            h1 { font-size: 2rem; }
+            .grid-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header class="profile-header">
-        <div class="profile-image-container">
-            <img src="image/my_photo.jpg" alt="프로필 사진" class="profile-image" 
-                 onerror="this.src='https://via.placeholder.com/180x180/222/00ff41?text=READY'">
-            </div>
-        <div class="profile-info">
-            <h1 class="profile-name">KJJ (본인 이름으로 변경)</h1>
-            <p class="profile-title">🛡️ 융합보안 & 클라우드 인프라 엔지니어</p>
-            <div class="profile-description">
-                <p>전자공학 기반의 하드웨어 이해도를 바탕으로, <strong>견고하고 자동화된 보안 인프라</strong>를 설계합니다.</p>
-                <p>현재 메가스터디 IT 아카데미에서 실무 역량을 쌓고 있으며, 시스템의 빈틈을 찾아 메우는 트러블슈팅 과정에 즐거움을 느낍니다.</p>
-            </div>
-            <div class="social-links">
-                <a href="https://github.com/KJJ-art" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-                <a href="mailto:본인이메일@example.com"><i class="fas fa-envelope"></i> Email</a>
-            </div>
-        </div>
-    </header>
-
-    <section class="terminal-section">
-        <div class="terminal-header">
-            <i class="fas fa-terminal"></i>
-            <span>root@security-portfolio:~/system_check# _</span>
-        </div>
-
-        <div id="section1">
-            <div class="command-line">
-                <span class="prompt">root@server:~#</span>
-                <span class="command" id="cmd1"></span><span class="cursor" id="cursor1"></span>
-            </div>
-            <div class="output hidden" id="out1">
-> <strong>[IDENTITY_CONFIRMED]</strong>
-> <strong>Major:</strong> 융합보안학 (Convergence Security)
-> <strong>Base:</strong> 전자공학 (Electronics H/W Fundamentals)
-> <strong>Status:</strong> 메가스터디 IT 아카데미 훈련생 (수료 예정: 2026.06)
-
-"단순 반복 작업을 코드로 자동화(IaC)하고, 보안 위협을 사전에 차단하는 시스템을 구축하는 것이 목표입니다."
-            </div>
-        </div>
-
-        <div id="section2" class="hidden">
-            <div class="command-line">
-                <span class="prompt">root@server:~#</span>
-                <span class="command" id="cmd2"></span><span class="cursor" id="cursor2"></span>
-            </div>
-            <div class="output hidden" id="out2">
-<div class="skill-bar-container"><span class="skill-name">Linux/Server</span> <div class="progress-bg"><div class="fill" style="width: 85%"></div></div></div>
-<div class="skill-bar-container"><span class="skill-name">Network/Sec</span> <div class="progress-bg"><div class="fill" style="width: 80%"></div></div></div>
-<div class="skill-bar-container"><span class="skill-name">AWS Cloud</span> <div class="progress-bg"><div class="fill" style="width: 70%"></div></div></div>
-<div class="skill-bar-container"><span class="skill-name">Docker/K8s</span> <div class="progress-bg"><div class="fill" style="width: 65%"></div></div></div>
-<div class="skill-bar-container"><span class="skill-name">Ansible/IaC</span> <div class="progress-bg"><div class="fill" style="width: 60%"></div></div></div>
-<span class="sub-text">* 수치는 현재 학습 진행도 및 자신감을 나타냅니다.</span>
-            </div>
-        </div>
+    <div class="container">
         
-        <div id="section3" class="hidden">
-             <div class="command-line">
-                <span class="prompt">root@server:~/projects#</span>
-                <span class="command" id="cmd3"></span><span class="cursor" id="cursor3"></span>
+        <header>
+            <div class="profile-img-box">
+                <img src="image/my_photo.jpg" alt="프로필 사진" class="profile-img" 
+                     onerror="this.src='https://ui-avatars.com/api/?name=K+J&background=2563eb&color=fff&size=200&font-size=0.4'">
             </div>
-            <div class="output hidden" id="out3">
-> <strong>[RECENT_LOGS]</strong>
-> <span class="highlight">1. 온프레미스 K8s 클러스터 구축 실습 (2026.01)</span>
-  - VirtualBox VM 3대를 활용하여 마스터-워커 노드 구성 및 네트워크 연결
-  - <span class="sub-text">→ 컨테이너 오케스트레이션 동작 원리 및 트러블슈팅 경험 획득</span>
-> <span class="highlight">2. AWS 기반 고가용성 웹 아키텍처 설계 (진행 중)</span>
-  - EC2, ELB, Auto Scaling을 활용한 트래픽 분산 환경 구축
-  - <span class="sub-text">→ 향후 Terraform을 활용한 인프라 자동화(IaC) 구현 예정</span>
-
-> <strong>READY FOR NEXT CHALLENGE...</strong>
+            
+            <h1>KJJ (본인 이름)</h1>
+            <span class="tagline">Security & Cloud Infra Engineer</span>
+            
+            <p class="bio">
+                "전자공학(H/W)에 대한 깊은 이해를 바탕으로,<br>
+                <strong>보안이 내재된 견고한 클라우드 인프라</strong>를 설계합니다."
+            </p>
+            
+            <div class="social-links">
+                <a href="https://github.com/KJJ-art" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-github" style="margin-right: 8px;"></i> GitHub
+                </a>
+                <a href="mailto:email@example.com" class="btn btn-outline">
+                    <i class="fas fa-envelope" style="margin-right: 8px;"></i> Contact
+                </a>
             </div>
-        </div>
+        </header>
 
-    </section>
-</div>
+        <div class="grid-container">
+            
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-layer-group"></i> Tech Stack
+                </div>
+                <div class="skill-tags">
+                    <span class="tag highlight"><i class="fab fa-aws"></i> AWS Cloud</span>
+                    <span class="tag highlight"><i class="fab fa-linux"></i> Linux RHEL</span>
+                    <span class="tag highlight"><i class="fas fa-shield-alt"></i> Security</span>
+                    <span class="tag"><i class="fab fa-docker"></i> Docker</span>
+                    <span class="tag"><i class="fas fa-dharmachakra"></i> Kubernetes</span>
+                    <span class="tag"><i class="fas fa-code-branch"></i> Ansible</span>
+                    <span class="tag"><i class="fas fa-cubes"></i> Terraform</span>
+                    <span class="tag"><i class="fab fa-git-alt"></i> Git</span>
+                </div>
+            </div>
 
-<script>
-    // --- 타이핑 효과 스크립트 ---
-    const typeWriter = (text, elementId, speed, callback) => {
-        let i = 0;
-        const element = document.getElementById(elementId);
-        element.innerHTML = "";
-        function type() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i); i++;
-                setTimeout(type, speed);
-            } else { if (callback) callback(); }
-        }
-        type();
-    };
-
-    // --- 페이지 로드 후 실행 순서 정의 ---
-    window.onload = function() {
-        setTimeout(() => { // 0.5초 후 시작
-            // 1. whoami 명령 실행
-            typeWriter("./display_profile.sh --details", "cmd1", 40, () => {
-                document.getElementById("cursor1").style.display = "none";
-                document.getElementById("out1").classList.remove("hidden");
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-graduation-cap"></i> Education
+                </div>
                 
-                setTimeout(() => {
-                    // 2. skills 명령 실행
-                    document.getElementById("section2").classList.remove("hidden");
-                    typeWriter("cat /etc/skills/stack_summary.txt", "cmd2", 35, () => {
-                        document.getElementById("cursor2").style.display = "none";
-                        document.getElementById("out2").classList.remove("hidden");
+                <div class="timeline-item">
+                    <span class="timeline-date">2025.12 ~ Present</span>
+                    <span class="timeline-title">메가스터디 IT 아카데미</span>
+                    <p class="timeline-desc">클라우드 인프라 구축 & 정보보안 과정</p>
+                </div>
 
-                        setTimeout(() => {
-                             // 3. projects 명령 실행
-                            document.getElementById("section3").classList.remove("hidden");
-                            typeWriter("tail -n 5 /var/log/projects.log", "cmd3", 30, () => {
-                                document.getElementById("cursor3").style.display = "none";
-                                document.getElementById("out3").classList.remove("hidden");
-                            });
-                        }, 800); // 3번 명령 대기 시간
-                    });
-                }, 800); // 2번 명령 대기 시간
-            });
-        }, 500); // 초기 대기 시간
-    };
-</script>
+                <div class="timeline-item">
+                    <span class="timeline-date">202X.03 ~ (재학)</span>
+                    <span class="timeline-title">OO대학교 융합보안학과</span>
+                    <p class="timeline-desc">4학년 (졸업 유예 / 취업 준비)</p>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-date">20XX.02 졸업</span>
+                    <span class="timeline-title">OO전문대학 전자공학과</span>
+                    <p class="timeline-desc">하드웨어 회로 설계 기초 과정 수료</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-tasks"></i> Projects & Goals
+                </div>
+                
+                <div class="timeline-item" style="border-left-color: var(--primary-color);">
+                    <span class="timeline-date" style="background:#e0f2fe; color:#0284c7;">Current Focus</span>
+                    <span class="timeline-title">Infra Automation Project</span>
+                    <p class="timeline-desc">
+                        Ansible과 Terraform을 활용한 하이브리드 클라우드 인프라 구축 자동화 (IaC) 실습
+                    </p>
+                </div>
+                
+                <div style="margin-top: 25px; padding-top: 20px; border-top: 1px dashed #e2e8f0;">
+                    <span style="font-size: 0.9rem; font-weight: 700; color: var(--secondary-color); display:block; margin-bottom:10px;">
+                        <i class="fas fa-certificate" style="color:var(--primary-color); margin-right:5px;"></i> Certification Goals
+                    </span>
+                    <div class="skill-tags">
+                        <span class="tag" style="font-size: 0.8rem;">정보보안기사</span>
+                        <span class="tag" style="font-size: 0.8rem;">산업보안관리사</span>
+                        <span class="tag" style="font-size: 0.8rem;">ADsP</span>
+                    </div>
+                </div>
+            </div>
+
+        </div> <footer>
+            &copy; 2026 KJJ Portfoilo. <br>Based on HTML5 & CSS3. Hosted on GitHub Pages.
+        </footer>
+
+    </div>
 
 </body>
 </html>
