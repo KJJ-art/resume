@@ -1,117 +1,131 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security Engineer Portfolio</title>
+    <title>Security & Infra Engineer Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* --- 전체 레이아웃 및 디자인 --- */
         body {
-            background-color: #0d0d0d;
-            color: #00ff41; /* 해커 그린 색상 */
-            font-family: 'Consolas', 'Courier New', monospace;
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-            line-height: 1.6;
+            background-color: #121212; /* 깊은 어두운색 배경 */
+            color: #e0e0e0; /* 밝은 회색 글씨 */
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* 깔끔한 현대적 폰트 */
+            margin: 0; padding: 0; line-height: 1.6;
+        }
+        a { text-decoration: none; color: #00ff41; transition: color 0.3s; }
+        a:hover { color: #fff; }
+
+        /* 메인 컨테이너 박스 */
+        .container {
+            max-width: 900px; margin: 40px auto; padding: 30px;
+            background-color: #1e1e1e; /* 조금 더 밝은 컨테이너 배경 */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
         }
 
-        /* 터미널 창 스타일 */
-        .terminal {
-            max-width: 800px;
-            margin: 50px auto;
-            border: 2px solid #333;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-            background-color: #111;
-            padding: 20px;
-            border-radius: 5px;
+        /* --- [상단] 프로필 섹션 스타일 --- */
+        .profile-header {
+            display: flex; align-items: center;
+            border-bottom: 2px solid #333; padding-bottom: 30px; margin-bottom: 30px;
         }
-
-        .header {
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #fff;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
+        .profile-image-container {
+            flex: 0 0 180px; /* 사진 영역 너비 고정 */
+            margin-right: 40px; text-align: center;
         }
-
-        .command-line {
-            display: flex;
-            margin-bottom: 15px;
+        .profile-image {
+            width: 180px; height: 180px;
+            border-radius: 50%; /* 원형 사진 */
+            object-fit: cover; /* 비율 유지하며 꽉 채우기 */
+            border: 3px solid #00ff41; /* 초록색 테두리 포인트 */
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3); /* 빛나는 효과 */
+            background-color: #333; /* 사진 없을 때 배경색 */
         }
-
-        .prompt {
-            color: #ff0055; /* 강조색 (루트 사용자 느낌) */
-            margin-right: 10px;
+        .profile-info { flex: 1; } /* 나머지 공간 차지 */
+        .profile-name { font-size: 2.2em; font-weight: bold; margin: 0 0 10px 0; color: #fff; }
+        .profile-title { font-size: 1.1em; color: #00ff41; margin-bottom: 15px; font-weight: 500; }
+        .profile-description { margin-bottom: 25px; color: #bbb; font-size: 0.95em; }
+        .social-links a {
+            display: inline-flex; align-items: center; margin-right: 20px;
+            font-size: 1em; color: #bbb; border: 1px solid #444;
+            padding: 8px 15px; border-radius: 20px; transition: all 0.3s;
         }
+        .social-links a:hover { color: #00ff41; border-color: #00ff41; background-color: rgba(0,255,65,0.1); }
+        .social-links i { margin-right: 8px; }
 
-        .command {
-            color: #fff;
+        /* --- [하단] 터미널 섹션 스타일 --- */
+        .terminal-section {
+            background-color: #0d0d0d; /* 더 어두운 리얼 터미널 배경 */
+            padding: 25px; border-radius: 8px; border: 1px solid #333;
+            font-family: 'Consolas', 'Courier New', monospace; /* 전용 터미널 폰트 */
         }
-
-        .output {
-            color: #ccc;
-            margin-bottom: 20px;
-            white-space: pre-wrap; /* 줄바꿈 유지 */
+        .terminal-header {
+            color: #888; font-size: 0.9em; margin-bottom: 20px;
+            display: flex; align-items: center; border-bottom: 1px solid #222; padding-bottom: 10px;
         }
+        .terminal-header i { margin-right: 10px; color: #ff0055; }
 
-        /* 타이핑 효과 커서 */
+        /* 명령어 라인 스타일 */
+        .command-line { margin-bottom: 15px; }
+        .prompt { color: #ff0055; margin-right: 10px; font-weight: bold; }
+        .command { color: #fff; font-weight: bold; }
+        .output { color: #ccc; margin-bottom: 25px; white-space: pre-wrap; padding-left: 15px; border-left: 3px solid #ff0055; }
+        .output strong { color: #fff; font-weight: 600; }
+        .highlight { color: #00ff41; }
+        .sub-text { color: #888; font-size: 0.9em; margin-left: 20px; display: block; margin-top: 5px; }
+
+        /* 타이핑 커서 */
         .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 18px;
-            background-color: #00ff41;
-            animation: blink 1s infinite;
-            vertical-align: middle;
+            display: inline-block; width: 9px; height: 18px; background-color: #00ff41;
+            animation: blink 1s infinite; vertical-align: text-bottom; margin-left: 5px;
         }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .highlight {
-            color: #00ff41;
-            font-weight: bold;
-        }
-
-        .hidden {
-            display: none;
-        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .hidden { display: none; }
 
         /* 스킬바 디자인 */
-        .skill-container {
-            margin: 10px 0;
+        .skill-bar-container { margin-bottom: 12px; display: flex; align-items: center; }
+        .skill-name { flex: 0 0 130px; color: #fff; font-weight: 600; }
+        .progress-bg {
+            flex: 1; height: 10px; background-color: #333; border-radius: 5px; overflow: hidden;
         }
-        .skill-name {
-            display: inline-block;
-            width: 100px;
-        }
-        .progress-bar {
-            display: inline-block;
-            width: 200px;
-            height: 10px;
-            background-color: #333;
-            border: 1px solid #555;
-        }
-        .fill {
-            height: 100%;
-            background-color: #00ff41;
-            width: 0%;
-            transition: width 1s ease-in-out;
-        }
+        .fill { height: 100%; background-color: #00ff41; width: 0; transition: width 1.2s cubic-bezier(0.22, 0.61, 0.36, 1); }
 
-        a { color: #fff; text-decoration: underline; }
+        /* 반응형: 모바일 화면 */
+        @media (max-width: 768px) {
+            .container { margin: 20px 10px; padding: 20px; }
+            .profile-header { flex-direction: column; text-align: center; }
+            .profile-image-container { margin-right: 0; margin-bottom: 25px; }
+            .social-links { justify-content: center; flex-wrap: wrap; gap: 10px; }
+            .social-links a { margin-right: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="terminal">
-        <div class="header">
-            <span>root@security-server:~</span>
-            <span>bash</span>
+<div class="container">
+    <header class="profile-header">
+        <div class="profile-image-container">
+            <img src="image/my_photo.jpg" alt="프로필 사진" class="profile-image" 
+                 onerror="this.src='https://via.placeholder.com/180x180/222/00ff41?text=READY'">
+            </div>
+        <div class="profile-info">
+            <h1 class="profile-name">KJJ (본인 이름으로 변경)</h1>
+            <p class="profile-title">🛡️ 융합보안 & 클라우드 인프라 엔지니어</p>
+            <div class="profile-description">
+                <p>전자공학 기반의 하드웨어 이해도를 바탕으로, <strong>견고하고 자동화된 보안 인프라</strong>를 설계합니다.</p>
+                <p>현재 메가스터디 IT 아카데미에서 실무 역량을 쌓고 있으며, 시스템의 빈틈을 찾아 메우는 트러블슈팅 과정에 즐거움을 느낍니다.</p>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/KJJ-art" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                <a href="mailto:본인이메일@example.com"><i class="fas fa-envelope"></i> Email</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="terminal-section">
+        <div class="terminal-header">
+            <i class="fas fa-terminal"></i>
+            <span>root@security-portfolio:~/system_check# _</span>
         </div>
 
         <div id="section1">
@@ -120,12 +134,12 @@
                 <span class="command" id="cmd1"></span><span class="cursor" id="cursor1"></span>
             </div>
             <div class="output hidden" id="out1">
-> <strong>SYSTEM BOOTING... [OK]</strong>
-> <strong>Identity:</strong> 융합보안 & 인프라 엔지니어 (준비중)
-> <strong>Background:</strong> 전자공학(H/W) + 융합보안(Security)
-> <strong>Current:</strong> 메가스터디 IT 아카데미 훈련생 (2026 수료 예정)
+> <strong>[IDENTITY_CONFIRMED]</strong>
+> <strong>Major:</strong> 융합보안학 (Convergence Security)
+> <strong>Base:</strong> 전자공학 (Electronics H/W Fundamentals)
+> <strong>Status:</strong> 메가스터디 IT 아카데미 훈련생 (수료 예정: 2026.06)
 
-"하드웨어의 이해를 바탕으로, 견고한 클라우드 보안 인프라를 설계합니다."
+"단순 반복 작업을 코드로 자동화(IaC)하고, 보안 위협을 사전에 차단하는 시스템을 구축하는 것이 목표입니다."
             </div>
         </div>
 
@@ -135,76 +149,80 @@
                 <span class="command" id="cmd2"></span><span class="cursor" id="cursor2"></span>
             </div>
             <div class="output hidden" id="out2">
-<div class="skill-container"><span class="skill-name">Linux/Server</span> <div class="progress-bar"><div class="fill" style="width: 85%"></div></div></div>
-<div class="skill-container"><span class="skill-name">Network</span> <div class="progress-bar"><div class="fill" style="width: 80%"></div></div></div>
-<div class="skill-container"><span class="skill-name">AWS Cloud</span> <div class="progress-bar"><div class="fill" style="width: 70%"></div></div></div>
-<div class="skill-container"><span class="skill-name">Docker/K8s</span> <div class="progress-bar"><div class="fill" style="width: 60%"></div></div></div>
-<div class="skill-container"><span class="skill-name">Security</span> <div class="progress-bar"><div class="fill" style="width: 75%"></div></div></div>
+<div class="skill-bar-container"><span class="skill-name">Linux/Server</span> <div class="progress-bg"><div class="fill" style="width: 85%"></div></div></div>
+<div class="skill-bar-container"><span class="skill-name">Network/Sec</span> <div class="progress-bg"><div class="fill" style="width: 80%"></div></div></div>
+<div class="skill-bar-container"><span class="skill-name">AWS Cloud</span> <div class="progress-bg"><div class="fill" style="width: 70%"></div></div></div>
+<div class="skill-bar-container"><span class="skill-name">Docker/K8s</span> <div class="progress-bg"><div class="fill" style="width: 65%"></div></div></div>
+<div class="skill-bar-container"><span class="skill-name">Ansible/IaC</span> <div class="progress-bg"><div class="fill" style="width: 60%"></div></div></div>
+<span class="sub-text">* 수치는 현재 학습 진행도 및 자신감을 나타냅니다.</span>
             </div>
         </div>
-
+        
         <div id="section3" class="hidden">
-            <div class="command-line">
-                <span class="prompt">root@server:~#</span>
+             <div class="command-line">
+                <span class="prompt">root@server:~/projects#</span>
                 <span class="command" id="cmd3"></span><span class="cursor" id="cursor3"></span>
             </div>
             <div class="output hidden" id="out3">
-Contact Information:
-------------------------------------------------
-Email: 본인의이메일@example.com
-Github: <a href="https://github.com/KJJ-art" target="_blank">github.com/KJJ-art</a>
-Blog: (블로그가 있다면 주소 입력)
-------------------------------------------------
-> <strong>Ready for Action.</strong>
+> <strong>[RECENT_LOGS]</strong>
+> <span class="highlight">1. 온프레미스 K8s 클러스터 구축 실습 (2026.01)</span>
+  - VirtualBox VM 3대를 활용하여 마스터-워커 노드 구성 및 네트워크 연결
+  - <span class="sub-text">→ 컨테이너 오케스트레이션 동작 원리 및 트러블슈팅 경험 획득</span>
+> <span class="highlight">2. AWS 기반 고가용성 웹 아키텍처 설계 (진행 중)</span>
+  - EC2, ELB, Auto Scaling을 활용한 트래픽 분산 환경 구축
+  - <span class="sub-text">→ 향후 Terraform을 활용한 인프라 자동화(IaC) 구현 예정</span>
+
+> <strong>READY FOR NEXT CHALLENGE...</strong>
             </div>
         </div>
 
-    </div>
+    </section>
+</div>
 
-    <script>
-        // 타이핑 효과를 위한 스크립트
-        const typeWriter = (text, elementId, callback) => {
-            let i = 0;
-            const element = document.getElementById(elementId);
-            const speed = 50; // 타이핑 속도
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else {
-                    if (callback) callback();
-                }
-            }
-            type();
-        };
+<script>
+    // --- 타이핑 효과 스크립트 ---
+    const typeWriter = (text, elementId, speed, callback) => {
+        let i = 0;
+        const element = document.getElementById(elementId);
+        element.innerHTML = "";
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i); i++;
+                setTimeout(type, speed);
+            } else { if (callback) callback(); }
+        }
+        type();
+    };
 
-        // 순차적 실행 로직
-        window.onload = function() {
-            // 1. whoami 실행
-            typeWriter("./whoami_profile.sh", "cmd1", () => {
-                document.getElementById("cursor1").style.display = "none"; // 커서 숨김
-                document.getElementById("out1").classList.remove("hidden"); // 결과 출력
+    // --- 페이지 로드 후 실행 순서 정의 ---
+    window.onload = function() {
+        setTimeout(() => { // 0.5초 후 시작
+            // 1. whoami 명령 실행
+            typeWriter("./display_profile.sh --details", "cmd1", 40, () => {
+                document.getElementById("cursor1").style.display = "none";
+                document.getElementById("out1").classList.remove("hidden");
                 
                 setTimeout(() => {
-                    // 2. skills 실행
+                    // 2. skills 명령 실행
                     document.getElementById("section2").classList.remove("hidden");
-                    typeWriter("cat /etc/skills.conf", "cmd2", () => {
+                    typeWriter("cat /etc/skills/stack_summary.txt", "cmd2", 35, () => {
                         document.getElementById("cursor2").style.display = "none";
                         document.getElementById("out2").classList.remove("hidden");
-                        
+
                         setTimeout(() => {
-                            // 3. contact 실행
+                             // 3. projects 명령 실행
                             document.getElementById("section3").classList.remove("hidden");
-                            typeWriter("tail -n 5 contact_info.txt", "cmd3", () => {
+                            typeWriter("tail -n 5 /var/log/projects.log", "cmd3", 30, () => {
+                                document.getElementById("cursor3").style.display = "none";
                                 document.getElementById("out3").classList.remove("hidden");
                             });
-                        }, 1000);
+                        }, 800); // 3번 명령 대기 시간
                     });
-                }, 1000);
+                }, 800); // 2번 명령 대기 시간
             });
-        };
-    </script>
+        }, 500); // 초기 대기 시간
+    };
+</script>
+
 </body>
 </html>
