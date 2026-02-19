@@ -1,1 +1,210 @@
 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Engineer Portfolio</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #00ff41; /* 해커 그린 색상 */
+            font-family: 'Consolas', 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 터미널 창 스타일 */
+        .terminal {
+            max-width: 800px;
+            margin: 50px auto;
+            border: 2px solid #333;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            background-color: #111;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .header {
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .command-line {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .prompt {
+            color: #ff0055; /* 강조색 (루트 사용자 느낌) */
+            margin-right: 10px;
+        }
+
+        .command {
+            color: #fff;
+        }
+
+        .output {
+            color: #ccc;
+            margin-bottom: 20px;
+            white-space: pre-wrap; /* 줄바꿈 유지 */
+        }
+
+        /* 타이핑 효과 커서 */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #00ff41;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .highlight {
+            color: #00ff41;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* 스킬바 디자인 */
+        .skill-container {
+            margin: 10px 0;
+        }
+        .skill-name {
+            display: inline-block;
+            width: 100px;
+        }
+        .progress-bar {
+            display: inline-block;
+            width: 200px;
+            height: 10px;
+            background-color: #333;
+            border: 1px solid #555;
+        }
+        .fill {
+            height: 100%;
+            background-color: #00ff41;
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+
+        a { color: #fff; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="terminal">
+        <div class="header">
+            <span>root@security-server:~</span>
+            <span>bash</span>
+        </div>
+
+        <div id="section1">
+            <div class="command-line">
+                <span class="prompt">root@server:~#</span>
+                <span class="command" id="cmd1"></span><span class="cursor" id="cursor1"></span>
+            </div>
+            <div class="output hidden" id="out1">
+> <strong>SYSTEM BOOTING... [OK]</strong>
+> <strong>Identity:</strong> 융합보안 & 인프라 엔지니어 (준비중)
+> <strong>Background:</strong> 전자공학(H/W) + 융합보안(Security)
+> <strong>Current:</strong> 메가스터디 IT 아카데미 훈련생 (2026 수료 예정)
+
+"하드웨어의 이해를 바탕으로, 견고한 클라우드 보안 인프라를 설계합니다."
+            </div>
+        </div>
+
+        <div id="section2" class="hidden">
+            <div class="command-line">
+                <span class="prompt">root@server:~#</span>
+                <span class="command" id="cmd2"></span><span class="cursor" id="cursor2"></span>
+            </div>
+            <div class="output hidden" id="out2">
+<div class="skill-container"><span class="skill-name">Linux/Server</span> <div class="progress-bar"><div class="fill" style="width: 85%"></div></div></div>
+<div class="skill-container"><span class="skill-name">Network</span> <div class="progress-bar"><div class="fill" style="width: 80%"></div></div></div>
+<div class="skill-container"><span class="skill-name">AWS Cloud</span> <div class="progress-bar"><div class="fill" style="width: 70%"></div></div></div>
+<div class="skill-container"><span class="skill-name">Docker/K8s</span> <div class="progress-bar"><div class="fill" style="width: 60%"></div></div></div>
+<div class="skill-container"><span class="skill-name">Security</span> <div class="progress-bar"><div class="fill" style="width: 75%"></div></div></div>
+            </div>
+        </div>
+
+        <div id="section3" class="hidden">
+            <div class="command-line">
+                <span class="prompt">root@server:~#</span>
+                <span class="command" id="cmd3"></span><span class="cursor" id="cursor3"></span>
+            </div>
+            <div class="output hidden" id="out3">
+Contact Information:
+------------------------------------------------
+Email: 본인의이메일@example.com
+Github: <a href="https://github.com/KJJ-art" target="_blank">github.com/KJJ-art</a>
+Blog: (블로그가 있다면 주소 입력)
+------------------------------------------------
+> <strong>Ready for Action.</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 타이핑 효과를 위한 스크립트
+        const typeWriter = (text, elementId, callback) => {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            const speed = 50; // 타이핑 속도
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    if (callback) callback();
+                }
+            }
+            type();
+        };
+
+        // 순차적 실행 로직
+        window.onload = function() {
+            // 1. whoami 실행
+            typeWriter("./whoami_profile.sh", "cmd1", () => {
+                document.getElementById("cursor1").style.display = "none"; // 커서 숨김
+                document.getElementById("out1").classList.remove("hidden"); // 결과 출력
+                
+                setTimeout(() => {
+                    // 2. skills 실행
+                    document.getElementById("section2").classList.remove("hidden");
+                    typeWriter("cat /etc/skills.conf", "cmd2", () => {
+                        document.getElementById("cursor2").style.display = "none";
+                        document.getElementById("out2").classList.remove("hidden");
+                        
+                        setTimeout(() => {
+                            // 3. contact 실행
+                            document.getElementById("section3").classList.remove("hidden");
+                            typeWriter("tail -n 5 contact_info.txt", "cmd3", () => {
+                                document.getElementById("out3").classList.remove("hidden");
+                            });
+                        }, 1000);
+                    });
+                }, 1000);
+            });
+        };
+    </script>
+</body>
+</html>
